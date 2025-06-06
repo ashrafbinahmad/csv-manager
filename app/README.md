@@ -96,7 +96,7 @@ This project was developed as a full-stack assessment, creating a CSV import and
 
 3. [First-time setup] Run database migrations:
    ```bash
-   wasp db migrate-dev
+   wasp db migrate-dev 
    ```
 
 ### Project Structure
