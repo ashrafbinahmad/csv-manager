@@ -9,7 +9,7 @@ export default function CsvManagerLayout({ children, type }: { children: React.R
   }, [type])
   
   return (
-    <main className={`grid h-screen transition-all duration-150 ${collapseSidebar ? "grid-cols-[50px_auto]" : "grid-cols-[220px_auto]"}`}>
+    <main className={`grid h-screen transition-all duration-150 ${collapseSidebar ? "grid-cols-[50px_auto]" : "grid-cols-[220px_auto] max-md:grid-cols-[50px_auto]"}`}>
       <Sidebar />
       <div className='h-full overflow-auto'>{children}</div>
       <Toaster />

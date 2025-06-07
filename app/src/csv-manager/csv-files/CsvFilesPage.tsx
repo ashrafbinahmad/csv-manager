@@ -39,9 +39,9 @@ export function CsvFilesPage() {
 
   return (
     <CsvManagerLayout>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full ">
         <Header heading='Imported Files' description={`Total ${(csvFiles as unknown as CsvFile[])?.length || 0} files`} leftComponent={<Button onClick={() => setImportDialogueOpen(true)}>Import CSV</Button>} />
-        <div className="flex-1 p-10 flex gap-4 flex-wrap overflow-auto">
+        <div className="flex-1 p-10 flex gap-4 flex-wrap overflow-auto content-start">
           {isLoading ? (
             <div>Loading...</div>
           ) : (
@@ -65,7 +65,7 @@ export function CsvFilesPage() {
 
 function CsvFileCard(props: Partial<CsvFile> & { type?: 'new', onClick?: () => void }) {
   return (
-    <div onClick={props.onClick} className='border-[#DEDEDE] border-2 rounded-xl basis-[200px] h-[180px] overflow-hidden cursor-pointer hover:shadow-3 flex flex-col'>
+    <div onClick={props.onClick} className='border-[#DEDEDE] border-2 rounded-xl basis-[200px] max-md:flex-grow h-[180px] overflow-hidden cursor-pointer hover:shadow-3 flex flex-col'>
       <div className="bg-[#F8F8F7] p-5 flex-1 flex flex-col items-center justify-center">
         <IconContext.Provider value={{ size: '50px' }}  >
           <BiFile className='fill-[#424242]' />

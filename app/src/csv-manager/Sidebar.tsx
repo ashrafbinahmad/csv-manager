@@ -44,8 +44,8 @@ function SidebarMenuItem(props: ISideBarMenuItem) {
   return (
     <Link
       to={props.link}
-      className={`grid grid-cols-[40px_auto] items-center  py-1 px-2 rounded-sm whitespace-nowrap ${
-        location.pathname === props.link ? "bg-[#F1F1EF]" : ""
+      className={`grid grid-cols-[40px_auto] items-center  py-1 px-2 rounded-sm whitespace-nowrap text-gray-700 hover:text-gray-800 text-sm font-medium ${
+        location.pathname === props.link ? "bg-gray-200" : ""
       }`}
     >
       <IconContext.Provider value={{ size: "22px" }}>

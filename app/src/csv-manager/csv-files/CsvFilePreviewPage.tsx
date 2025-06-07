@@ -586,15 +586,15 @@ export function CsvFilePreviewPage() {
         }
         leftComponent={
           <div className="flex gap-2">
-            <div className="min-w-[150px]">
+            <div className="min-w-[150px] max-md:hidden">
               <p className="text-sm text-gray-500">Original Name</p>
               <p className="font-medium">{csvFile.originalName}</p>
             </div>
-            <div className="min-w-[150px]">
+            <div className="min-w-[150px] max-md:hidden">
               <p className="text-sm text-gray-500">Batch Type</p>
               <p className="font-medium">{csvFile.batchType.name}</p>
             </div>
-            <div className="min-w-[150px]">
+            <div className="min-w-[150px] max-md:hidden ">
               <p className="text-sm text-gray-500">Upload Date</p>
               <p className="font-medium">
                 {new Date(csvFile.uploadedAt).toLocaleDateString()}

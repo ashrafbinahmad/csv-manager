@@ -20,8 +20,8 @@ export function BatchTypesPage() {
   return (
     <CsvManagerLayout>
       <Header
-        heading="Imported Files"
-        description="Total 80 files"
+        heading="Batch Types"
+        description={`Total ${(batchTypes as BatchType[])?.length} batch types`}
         leftComponent={
           <Button onClick={() => setIsNewDialogOpen(true)}>
             New Batch Type
@@ -29,8 +29,7 @@ export function BatchTypesPage() {
         }
       />
       <div className="container mx-auto p-10">
-
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
           {(batchTypes as BatchType[])?.map((batchType) => (
             <div key={batchType.id} className="border rounded-lg p-4">
               <div className="flex justify-between items-start mb-4">
@@ -63,7 +62,7 @@ export function BatchTypesPage() {
 
               <div className="space-y-2">
                 <h3 className="font-medium">Columns:</h3>
-                <ul className="grid grid-cols-2 gap-2">
+                <ul className="grid grid-cols-2 max-md:grid-cols-1 gap-2">
                   {batchType.columns.map((col, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <span>{col}</span>
