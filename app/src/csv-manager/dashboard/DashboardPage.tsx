@@ -28,7 +28,7 @@ export function Dashboard() {
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Welcome to CSV Manager</h2>
             <p className="text-gray-600 mb-8">Get started by creating your first batch type</p>
             <Link
-              to="/batch-types/new"
+              to="/batch-types?mode=create"
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
               <PlusIcon className="h-5 w-5 mr-2" />

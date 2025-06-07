@@ -1,19 +1,28 @@
 import { useQuery } from "wasp/client/operations";
 import { getBatchTypes, deleteBatchType } from "wasp/client/operations";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewBatchTypeDialogue from "./NewBatchTypeDialogue";
 import { Button } from "../../components/ui/button";
 import { type BatchType } from "wasp/entities";
 import CsvManagerLayout from "../Layout";
 import Header from "../Header";
 import { toast } from "sonner";
+import { useLocation } from "react-router-dom";
+import { ConfirmDeletionDialog } from "../../components/ui/ConfirmDeletionDialog";
 
 export function BatchTypesPage() {
   const { data: batchTypes, isLoading } = useQuery(getBatchTypes);
   const [isNewDialogOpen, setIsNewDialogOpen] = useState(false);
-  const [editingBatchType, setEditingBatchType] = useState<BatchType | null>(
-    null
-  );
+  const [editingBatchType, setEditingBatchType] = useState<BatchType | null>(null);
+  const [deletingBatchType, setDeletingBatchType] = useState<BatchType | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('mode') === 'create') {
+      setIsNewDialogOpen(true);
+    }
+  }, [location.search]);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -46,14 +55,7 @@ export function BatchTypesPage() {
                     variant="outline"
                     size="sm"
                     className="text-red-600 hover:text-red-700"
-                    onClick={async () => {
-                      try {
-                        await deleteBatchType({ id: batchType.id });
-                        toast.success("Batch type deleted");
-                      } catch (error: any) {
-                        toast.error(error.message);
-                      }
-                    }}
+                    onClick={() => setDeletingBatchType(batchType)}
                   >
                     Delete
                   </Button>
@@ -86,6 +88,23 @@ export function BatchTypesPage() {
             if (!open) setEditingBatchType(null);
           }}
           batchType={editingBatchType || undefined}
+        />
+
+        <ConfirmDeletionDialog
+          open={!!deletingBatchType}
+          onOpenChange={(open) => !open && setDeletingBatchType(null)}
+          onConfirm={async () => {
+            if (!deletingBatchType) return;
+            try {
+              await deleteBatchType({ id: deletingBatchType.id });
+              toast.success("Batch type deleted");
+              setDeletingBatchType(null);
+            } catch (error: any) {
+              toast.error(error.message);
+            }
+          }}
+          title="Delete Batch Type"
+          description={`Are you sure you want to delete "${deletingBatchType?.name}"? This will also delete all associated CSV files and their data. This action cannot be undone.`}
         />
       </div>
     </CsvManagerLayout>

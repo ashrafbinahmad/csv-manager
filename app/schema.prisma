@@ -25,6 +25,7 @@ model User {
   tasks                     Task[]
   files                     File[]
   csvFiles                  CsvFile[]       // Added relation to CsvFiles
+  batchTypes                BatchType[]     // Added relation to BatchTypes
 }
 
 model CsvFile {
@@ -56,10 +57,13 @@ model CsvRow {
 model BatchType {
   id                        String          @id @default(uuid())
   createdAt                 DateTime        @default(now())
-  name  String
+  name                      String
   columns                   String[]
   requiredColumnIndexes     Int[]
   csvFiles                  CsvFile[]
+  user                      User            @relation(fields: [userId], references: [id])
+  userId                    String
+  @@index([userId])
 }
 
 model Task {

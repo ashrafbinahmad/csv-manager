@@ -1,4 +1,4 @@
-import { CreateCsvFile, UpdateCsvFile } from 'wasp/server/operations'
+import { CreateCsvFile, UpdateCsvFile, DeleteCsvFile } from 'wasp/server/operations'
 import { CsvFile } from 'wasp/entities'
 
 type CreateCsvFileInput = {
@@ -15,31 +15,32 @@ export type UpdateCsvFileInput = {
   deletedRowIds: string[]
 }
 
-export const createCsvFile: CreateCsvFile<CreateCsvFileInput, CsvFile> = async (args, context) => {
+export const createCsvFile: CreateCsvFile<CreateCsvFileInput, CsvFile> = async ({ fileName, originalName, batchTypeId, rows }, context) => {
   if (!context.user) throw new Error('Not authenticated')
+  const user = context.user // Type assertion after check
 
-  // First create the file
-  const file = await context.entities.CsvFile.create({
+  const csvFile = await context.entities.CsvFile.create({
     data: {
-      fileName: args.fileName,
-      originalName: args.originalName,
-      batchTypeId: args.batchTypeId,
-      userId: context.user.id,
-      rowCount: args.rows.length,
+      fileName,
+      originalName,
+      batchType: { connect: { id: batchTypeId } },
+      user: { connect: { id: user.id } },
+      rowCount: rows.length,
+      rows: {
+        create: rows.map(row => ({
+          rowData: row.rowData,
+          rowIndex: row.rowIndex,
+          sortOrder: row.sortOrder
+        }))
+      }
+    },
+    include: {
+      batchType: true,
+      rows: true
     }
   })
 
-  // Then create all rows
-  await context.entities.CsvRow.createMany({
-    data: args.rows.map(row => ({
-      rowData: row.rowData,
-      sortOrder: row.sortOrder,
-      rowIndex: row.rowIndex,
-      csvFileId: file.id
-    }))
-  })
-
-  return file
+  return csvFile
 }
 
 export const updateCsvFile: UpdateCsvFile<UpdateCsvFileInput, CsvFile> = async (args, context) => {
@@ -90,5 +91,22 @@ export const updateCsvFile: UpdateCsvFile<UpdateCsvFileInput, CsvFile> = async (
         }
       }
     }
+  })
+}
+
+export const deleteCsvFile: DeleteCsvFile<{ id: string }, void> = async ({ id }, context) => {
+  if (!context.user) throw new Error('Not authenticated')
+
+  // First, verify that the file belongs to the user
+  const existingFile = await context.entities.CsvFile.findUnique({
+    where: { id }
+  })
+
+  if (!existingFile) throw new Error('File not found')
+  if (existingFile.userId !== context.user.id) throw new Error('Not authorized')
+
+  // Delete the file and its rows (cascade delete will handle the rows)
+  await context.entities.CsvFile.delete({
+    where: { id }
   })
 } 

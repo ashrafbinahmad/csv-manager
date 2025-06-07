@@ -49,21 +49,17 @@ This project was developed as a full-stack assessment, creating a CSV import and
   - React Hot Toast (for notifications)
   - React Dropzone (for file uploads)
   - React Hook Form (for form management)
-  - Zod (for form validation)
 - **State Management & Data Fetching**:
   - React Query (for server state management)
   - Zustand (for client state management)
 - **Table Management**:
   - TanStack Table (for advanced table features)
-  - React Virtual (for virtualized lists)
+
 - **Development Tools**:
   - TypeScript (for type safety)
   - ESLint (for code linting)
   - Prettier (for code formatting)
-  - Husky (for git hooks)
-- **Testing**:
-  - Vitest (for unit testing)
-  - React Testing Library (for component testing)
+
 - **Build Tools**:
   - Vite (for development and building)
   - PostCSS (for CSS processing)
@@ -79,7 +75,7 @@ This project was developed as a full-stack assessment, creating a CSV import and
 ### Environment Setup
 1. Clone the repository
 2. Create the following environment files in the project root:
-   - `.env.client` - Frontend environment variables
+
    - `.env.server` - Backend environment variables
    - `.env` - Database connection string
 

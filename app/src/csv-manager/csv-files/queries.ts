@@ -1,7 +1,12 @@
 import { GetCsvFiles, GetCsvFile } from 'wasp/server/operations'
 
 export const getCsvFiles: GetCsvFiles = async (args, context) => {
+  if (!context.user) throw new Error('Not authenticated')
+  
   return context.entities.CsvFile.findMany({
+    where: {
+      userId: context.user.id
+    },
     orderBy: { uploadedAt: 'desc' },
     include: {
       batchType: true,
@@ -15,10 +20,15 @@ export const getCsvFiles: GetCsvFiles = async (args, context) => {
 }
 
 export const getCsvFile: GetCsvFile<{ id: string }> = async ({ id }, context) => {
+  if (!context.user) throw new Error('Not authenticated')
+  
   console.log('Getting CSV file with ID:', id);
   try {
     const file = await context.entities.CsvFile.findUnique({
-      where: { id },
+      where: { 
+        id,
+        userId: context.user.id
+      },
       include: {
         batchType: true,
         rows: {

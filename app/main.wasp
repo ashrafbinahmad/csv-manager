@@ -140,6 +140,11 @@ action updateCsvFile {
   fn: import { updateCsvFile } from "@src/csv-manager/csv-files/actions",
   entities: [CsvFile, CsvRow]
 }
+
+action deleteCsvFile {
+  fn: import { deleteCsvFile } from "@src/csv-manager/csv-files/actions.js",
+  entities: [CsvFile, CsvRow]
+}
 //#endregion
 
 //#region User

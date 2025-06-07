@@ -43,6 +43,7 @@ export default function FileImportDialogue({
       createdAt: new Date(),
       id: "1",
       name: "People",
+      userId: "mock-user-id"
     },
     {
       columns: ["Company name", "Company moto"],
@@ -50,6 +51,7 @@ export default function FileImportDialogue({
       createdAt: new Date(),
       id: "2",
       name: "Company",
+      userId: "mock-user-id"
     },
   ]);
   const [selectedBatchType, setSelectedBatchType] = useState<BatchType>();

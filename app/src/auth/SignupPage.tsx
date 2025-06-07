@@ -36,12 +36,12 @@ export function Signup() {
 
   return (
     <AuthPageLayout>
-      <div className="max-w-md w-full space-y-8">
+      <div className="w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-3xl font-semibold text-gray-900">
+          <h2 className="mt-6 text-2xl sm:text-3xl font-semibold text-gray-900">
             Get Started
           </h2>
-          <h2 className="text-xl font-semibold text-[#D3D1CB]">
+          <h2 className="text-lg sm:text-xl font-semibold text-[#D3D1CB]">
             Create your CSV Manager account
           </h2>
         </div>
@@ -51,13 +51,14 @@ export function Signup() {
               <div className="text-sm text-red-700">{error}</div>
             </div>
           )}
-          <div className="rounded-md shadow-sm space-y-4">
+          <div className="space-y-4">
             <div>
               <label htmlFor="username" className="sr-only">
                 Username
               </label>
               <Input
                 id="username"
+                className="w-full"
                 {...register("username", {
                   required: "Username is required",
                 })}
@@ -77,6 +78,7 @@ export function Signup() {
               </label>
               <Input
                 id="password"
+                className="w-full"
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -100,6 +102,7 @@ export function Signup() {
               </label>
               <Input
                 id="repeatPassword"
+                className="w-full"
                 {...register("repeatPassword", {
                   required: "Please confirm your password",
                   validate: value => value === password || "Passwords do not match"
@@ -119,10 +122,11 @@ export function Signup() {
           <div>
             <Button
               type="submit"
+              className="w-full"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
-                <span className="flex items-center">
+                <span className="flex items-center justify-center">
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
