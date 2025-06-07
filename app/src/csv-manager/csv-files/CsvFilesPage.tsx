@@ -93,10 +93,10 @@ export function CsvFilesPage() {
       <FileImportDialogue open={importDialogueOpen} setOpen={setImportDialogueOpen} />
       <ConfirmDeletionDialog
         open={deleteDialogOpen}
+        onOpenChange={(open) => !open && handleCancelDelete()}
         onConfirm={handleConfirmDelete}
-        onCancel={handleCancelDelete}
-        message="Are you sure you want to delete this CSV file? This action cannot be undone."
         title="Delete CSV File"
+        description="Are you sure you want to delete this CSV file? This action cannot be undone."
       />
     </CsvManagerLayout>
   )
