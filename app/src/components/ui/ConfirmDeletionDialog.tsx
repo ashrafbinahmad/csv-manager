@@ -7,11 +7,12 @@ import {
   DialogTitle,
 } from "./dialog";
 import { Button } from "./button";
+import { useState } from "react";
 
 interface ConfirmDeletionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onConfirm: () => void;
+  onConfirm: () => Promise<void>;
   title: string;
   description: string;
   confirmText?: string;
@@ -27,6 +28,17 @@ export function ConfirmDeletionDialog({
   confirmText = "Delete",
   cancelText = "Cancel"
 }: ConfirmDeletionDialogProps) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleConfirm = async () => {
+    try {
+      setIsDeleting(true);
+      await onConfirm();
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -35,11 +47,19 @@ export function ConfirmDeletionDialog({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button 
+            variant="outline" 
+            onClick={() => onOpenChange(false)}
+            disabled={isDeleting}
+          >
             {cancelText}
           </Button>
-          <Button variant="destructive" onClick={onConfirm}>
-            {confirmText}
+          <Button 
+            variant="destructive" 
+            onClick={handleConfirm}
+            disabled={isDeleting}
+          >
+            {isDeleting ? 'Deleting...' : confirmText}
           </Button>
         </DialogFooter>
       </DialogContent>

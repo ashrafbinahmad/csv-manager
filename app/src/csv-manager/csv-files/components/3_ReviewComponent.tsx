@@ -24,6 +24,8 @@ export default function ReviewComponent({
   batchName: string | undefined;
   selectedBatchType: BatchType | undefined;
 }) {
+  const [isImporting, setIsImporting] = useState(false);
+
   const handleImport = async () => {
     try {
       if (!selectedBatchType || !batchName || !parsedCsv?.data || !fieldMappings?.length) {
@@ -31,6 +33,7 @@ export default function ReviewComponent({
         return;
       }
 
+      setIsImporting(true);
       const [headers, ...dataRows] = parsedCsv.data;
       const rows = dataRows.map((row, index) => {
         const rowData: Record<string, string> = {};
@@ -58,6 +61,8 @@ export default function ReviewComponent({
       setActiveStep(4);
     } catch (error: any) {
       toast.error(error.message || "Failed to import file");
+    } finally {
+      setIsImporting(false);
     }
   };
 
@@ -150,8 +155,11 @@ export default function ReviewComponent({
         >
           Back
         </Button>
-        <Button onClick={handleImport}>
-          Import Batch
+        <Button
+          disabled={isImporting}
+          onClick={handleImport}
+        >
+          {isImporting ? 'Importing...' : 'Import'}
         </Button>
       </DialogFooter>
     </>

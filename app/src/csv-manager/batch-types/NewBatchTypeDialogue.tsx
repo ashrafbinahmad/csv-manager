@@ -26,6 +26,7 @@ export default function NewBatchTypeDialogue({
     requiredColumnIndexes: [],
     name: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (batchType) {
@@ -166,9 +167,10 @@ export default function NewBatchTypeDialogue({
         <DialogFooter className="p-5 border-t flex !justify-between w-full">
           <div></div>
           <Button
-            disabled={!formData.columns?.length || formData.columns.some(i => !i) || !formData.name}
+            disabled={!formData.columns?.length || formData.columns.some(i => !i) || !formData.name || isSubmitting}
             onClick={async () => {
               try {
+                setIsSubmitting(true);
                 if (batchType) {
                   await updateBatchType({
                     id: batchType.id,
@@ -189,10 +191,12 @@ export default function NewBatchTypeDialogue({
                 toast.success("Batch type created");
               } catch (error: any) {
                 toast.error(error.message);
+              } finally {
+                setIsSubmitting(false);
               }
             }}
           >
-            {batchType ? 'Save Changes' : 'Create'}
+            {isSubmitting ? 'Saving...' : (batchType ? 'Save Changes' : 'Create')}
           </Button>
         </DialogFooter>
       </DialogContent>
