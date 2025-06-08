@@ -33,8 +33,27 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* third-party libraries CSS */
+.drop-target {
+  position: relative;
+}
+.drop-target::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #2563eb;
+}
+th[draggable=true] {
+  cursor: move;
+}
+th[draggable=true]:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+input:focus {
+  outline: none;
+}
 
 .tableCheckbox:checked ~ div span {
   @apply opacity-100;

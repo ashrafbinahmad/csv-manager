@@ -15,14 +15,14 @@ import {
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { useEffect, useState } from "react";
-import MapFieldsComponent from "./components/2_MapFieldsComponent";
-import UploadFileComponent from "./components/1_UploadFileComponent";
-import ReviewComponent from "./components/3_ReviewComponent";
+import MapFieldsComponent from "./import-steps/2_MapFieldsComponent";
+import UploadFileComponent from "./import-steps/1_UploadFileComponent";
+import ReviewComponent from "./import-steps/3_ReviewComponent";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import Papa from "papaparse";
 import { type BatchType } from "wasp/entities";
-import CompleteComponent from "./components/4_CompleteComponent";
+import CompleteComponent from "./import-steps/4_CompleteComponent";
 
 export default function FileImportDialogue({
   open,

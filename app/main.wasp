@@ -42,14 +42,6 @@ app OpenSaaS {
   client: {
     rootComponent: import App from "@src/client/App",
   },
-
-  emailSender: {
-    provider: Dummy,
-    defaultFrom: {
-      name: "CSV Manager",
-      email: "me@example.com"
-    },
-  },
 }
 
 //#region Auth Pages
