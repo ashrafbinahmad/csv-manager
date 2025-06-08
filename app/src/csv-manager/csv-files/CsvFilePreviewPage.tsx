@@ -491,6 +491,7 @@ export function CsvFilePreviewPage() {
               onColumnVisibilityChange={setColumnVisibility}
               onCellValueChange={updateCellValue}
               onDeleteRow={handleDeleteRow}
+              onToggleAllColumns={handleToggleAllColumns}
             />
           </div>
         </div>

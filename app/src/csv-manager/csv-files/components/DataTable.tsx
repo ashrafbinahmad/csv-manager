@@ -30,6 +30,7 @@ interface DataTableProps {
   onColumnVisibilityChange: (visibility: VisibilityState) => void;
   onCellValueChange: (rowId: string, columnId: string, value: string) => void;
   onDeleteRow: (rowId: string) => void;
+  onToggleAllColumns: (visible: boolean) => void;
 }
 
 export const DataTable: React.FC<DataTableProps> = ({
@@ -45,6 +46,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   onColumnVisibilityChange,
   onCellValueChange,
   onDeleteRow,
+  onToggleAllColumns,
 }) => {
   const columnHelper = createColumnHelper<TableRow>();
 
@@ -160,6 +162,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                       newColumnOrder.splice(targetIndex, 0, draggedId);
                       onColumnOrderChange(newColumnOrder);
                     }}
+                    onToggleAllColumns={onToggleAllColumns}
                   />
                 ))}
               </tr>
